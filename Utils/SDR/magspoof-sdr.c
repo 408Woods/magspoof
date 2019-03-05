@@ -177,55 +177,6 @@ void playTrack(int track)
   digitalWrite(ENABLE_PIN, LOW);
 }
 
-// plays out a full track, calculating CRCs and LRC
-void playTrack2(){
-  int tmp, crc, lrc = 0;
-  int track = 1; // index 0
-  dir = 0;
-
-  // enable H-bridge and LED
-  digitalWrite(ENABLE_PIN, HIGH);
-
-  // First put out a bunch of leading zeros.
-  for (int i = 0; i < 25; i++)
-    playBit(0);
-
-  //
-  for (int i = 1; buffer[i] != '!' ; i++)
-  {
-    crc = 1;
-    tmp = buffer[i] - sublen[track];
-
-    for (int j = 0; j < bitlen[track]-1; j++)
-    {
-      crc ^= tmp & 1;
-      lrc ^= (tmp & 1) << j;
-      playBit(tmp & 1);
-      tmp >>= 1;
-    }
-    playBit(crc);
-  }
-
-  // finish calculating and send last "byte" (LRC)
-  tmp = lrc;
-  crc = 1;
-  for (int j = 0; j < bitlen[track]-1; j++)
-  {
-    crc ^= tmp & 1;
-    playBit(tmp & 1);
-    tmp >>= 1;
-  }
-  playBit(crc);
-
-  // finish with 0's
-  for (int i = 0; i < 5 * 5; i++)
-    playBit(0);
-
-  digitalWrite(PIN_A, LOW);
-  digitalWrite(PIN_B, LOW);
-  digitalWrite(ENABLE_PIN, LOW);
-}
-
 // stores track for reverse usage later
 void storeRevTrack(int track)
 {
