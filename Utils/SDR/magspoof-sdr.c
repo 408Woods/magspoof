@@ -235,7 +235,7 @@ void receiveTrigger(){
     {
       blink(ENABLE_PIN, 60, 1);
       receivedSize = buffer[0];
-      if (receivedSize == BUFFER_SIZE) // ! used it as \0
+      if (receivedSize == BUFFER_SIZE)
       {
         playTrack(2); // 2 as parameter to avoid the reverse function
         delay(400);
