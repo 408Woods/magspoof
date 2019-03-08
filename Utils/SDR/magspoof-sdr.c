@@ -31,7 +31,7 @@
 
 #define TRACKS 2
 
-#define BUFFER_SIZE 42 // buffer for sdr
+#define BUFFER_SIZE 40 // buffer for sdr
 uint8_t buffer[BUFFER_SIZE];
 uint8_t receivedSize = 0; 
 
@@ -130,7 +130,7 @@ void playTrack(int track)
     playBit(0);
 
   //for (int i = 0; tracks[track][i] != '\0'; i++)
-  for (int i = (!receivedSize) ? 0 : 1; (!receivedSize) ? tracks[track][i] != '\0' : buffer[i] != '!'; i++)
+  for (int i = (!receivedSize) ? 0 : 1; (!receivedSize) ? tracks[track][i] != '\0' : i < receivedSize; i++)
   {
     crc = 1;
     //tmp = tracks[track][i] - sublen[track];
@@ -235,7 +235,7 @@ void receiveTrigger(){
     {
       blink(ENABLE_PIN, 60, 1);
       receivedSize = buffer[0];
-      if (buffer[receivedSize] == '!') // ! used it as \0
+      if (receivedSize == BUFFER_SIZE) // ! used it as \0
       {
         playTrack(2); // 2 as parameter to avoid the reverse function
         delay(400);
