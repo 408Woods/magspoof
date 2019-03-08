@@ -9,11 +9,12 @@
 
 #define TX_PIN  7  //pin where your transmitter is connected
 #define LED_PIN 13 //pin for blinking LED
+#define BUFFER_SIZE 40 // buffer for sdr - must be the same size as expected in the MagSpoof buffer
 
 uint8_t led = 1; //last led status
 
 //;5634567891234567=12345678123456781234? track example
-uint8_t data[] = {11,';','5','6', '3', '4', '5', '6', '7', '8','9','1','2','3','4','5','6','7','=','1','2', '3', '4', '5', '6', '7', '8','1','2','3','4','5','6','7','8','1','2','3','4','?'};
+uint8_t data[BUFFER_SIZE] = {11,';','5','6', '3', '4', '5', '6', '7', '8','9','1','2','3','4','5','6','7','=','1','2', '3', '4', '5', '6', '7', '8','1','2','3','4','5','6','7','8','1','2','3','4','?'};
 
 void setup() {
   pinMode(LED_PIN, OUTPUT);
