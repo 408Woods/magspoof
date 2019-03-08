@@ -249,6 +249,7 @@ void receiveTrigger(){
     { 
         blink(ENABLE_PIN, 90, 2);
         prevButtonMilli = millis();
+        receivedSize = 0;
         break;
     }
   }
